@@ -10,10 +10,8 @@ const router = new Router()
     const login = await spotifyAuth(params);
     ctx.response.body = { "data": login };
   })
-  .get("/api/audioData", async (ctx) => {
-    // const headers = ctx.request.headers;
-    const params = ctx.params;
-    const response = await spotifyAudioAnlz(params);
+  .get("/api/audioData/:id", async (ctx) => {
+    const response = await spotifyAudioAnlz(ctx.params);
     ctx.response.body = { "data": response };
   });
 export default router;

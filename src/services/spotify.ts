@@ -5,6 +5,11 @@ export interface Creds {
   password: string;
 }
 
+export interface AudioParams {
+  artistId: string;
+  auth: string;
+}
+
 export const spotifyAuth = async (credentials: any) => {
   const { username, password }: Creds = credentials;
   const encodedSecret: string = btoa(
@@ -22,7 +27,26 @@ export const spotifyAuth = async (credentials: any) => {
       },
     );
     console.log(await response.json());
-    
+
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
+export const spotifyAudioAnlz = async (params: any) => {
+  const { artistId, auth }: AudioParams = params;
+  try {
+    const response = await fetch(
+      `https://api.spotify.com/v1/artists/${artistId}/top-tracks`,
+      {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${auth}`,
+        },
+      },
+    );
     return await response.json();
   } catch (err) {
     console.log(err);

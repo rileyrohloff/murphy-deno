@@ -23,6 +23,6 @@
     "execute": {
         ".ts": ["deno", "run"]
     },
-    "fmt": false,
+    "fmt": true,
     "test": true
 }

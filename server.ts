@@ -2,7 +2,7 @@ import { Application } from "https://deno.land/x/oak/mod.ts";
 import router from "./src/routes/routes.ts";
 import { PORT } from "./config.ts";
 
-const app = new Application()
+const app = new Application();
 
 app.addEventListener("error", (evt) => {
   // Will log the thrown error to the console.

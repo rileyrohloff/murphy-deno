@@ -1,5 +1,5 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
-import { spotifyAuth } from "../services/spotify.ts";
+import { spotifyAuth, spotifyAudioAnlz } from "../services/spotify.ts";
 
 const router = new Router()
   .get("/test", (context) => {
@@ -9,5 +9,11 @@ const router = new Router()
     const params = await ctx.params;
     const login = await spotifyAuth(params);
     ctx.response.body = { "data": login };
+  })
+  .get("/api/audioData", async (ctx) => {
+    // const headers = ctx.request.headers;
+    const params = ctx.params;
+    const response = await spotifyAudioAnlz(params);
+    ctx.response.body = { "data": response };
   });
 export default router;

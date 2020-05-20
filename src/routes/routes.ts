@@ -1,17 +1,14 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
-import { spotifyAuth, spotifyAudioAnlz } from "../services/spotify.ts";
+// import { spotifyAuth, spotifyAudioAnlz } from "../services/spotify.ts";
+import SwapiClient from "../services/swapi.ts";
 
-const router = new Router()
+const router: Router = new Router()
   .get("/test", (context) => {
     context.response.body = { "data": "hello world" };
   })
-  .post("/api/login", async (ctx) => {
-    const params = await ctx.params;
-    const login = await spotifyAuth(params);
-    ctx.response.body = { "data": login };
-  })
-  .get("/api/audioData/:id", async (ctx) => {
-    const response = await spotifyAudioAnlz(ctx.params);
-    ctx.response.body = { "data": response };
+  .get("/api/shipData", async (ctx) => {
+    const response = await SwapiClient.shipSpeeds("https://swapi.dev/api");
+    ctx.response.body = response;
   });
+
 export default router;

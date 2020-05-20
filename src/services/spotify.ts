@@ -51,7 +51,14 @@ export const spotifyAudioAnlz = async (params: any) => {
         },
       },
     );
-    return await response.json();
+
+    const trackData = await response.json();
+    const trackArray = trackData.tracks;
+    const responseData: Array<number> = trackArray.map((element: any) => {
+      return element.duration_ms;
+    });
+
+    return { "trackDurations": responseData };
   } catch (err) {
     console.log(err);
     return err;

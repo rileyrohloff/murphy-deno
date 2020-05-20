@@ -8,8 +8,6 @@ app.addEventListener("error", (evt) => {
   // Will log the thrown error to the console.
   console.log(evt.error);
 });
-app.use(router.routes());
-app.use(router.allowedMethods());
 
 // Logger
 app.use(async (ctx, next) => {
@@ -25,5 +23,7 @@ app.use(async (ctx, next) => {
   const ms = Date.now() - start;
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 });
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 await app.listen({ port: PORT });

@@ -1,9 +1,11 @@
 class SwapiClient {
   constructor() {
   }
-  static shipSpeeds = async (url: string): Promise<object> => {
+  static swapiURL = "https://swapi.dev/api/";
+  static shipSpeeds = async (): Promise<object> => {
     try {
-      const response = await (await fetch(url + "/starships")).json();
+      const response = await (await fetch(SwapiClient.swapiURL + "/starships"))
+        .json();
       const ships: Array<object> = await response.results.map(
         (ship: any) => {
           return ship.max_atmosphering_speed;
@@ -13,6 +15,16 @@ class SwapiClient {
     } catch (err) {
       console.log(`ERROR: ${err}`);
       return err;
+    }
+  };
+  static getData = async (object: string): Promise<object> => {
+    try {
+      const response = await fetch(SwapiClient.swapiURL + `${object}`);
+      const data = await response.json();
+      return { "data": [data] };
+    } catch (err) {
+      console.log(err);
+      return { "error": err };
     }
   };
 }

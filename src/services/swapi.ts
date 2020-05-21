@@ -19,8 +19,10 @@ class SwapiClient {
   };
   static getData = async (object: string): Promise<object> => {
     try {
-      const response = await fetch(SwapiClient.swapiURL + `${object}`);
-      const data = await response.json();
+      const response: Response = await fetch(
+        SwapiClient.swapiURL + `${object}`,
+      );
+      const data: Promise<JSON> = await response.json();
       return { "data": [data] };
     } catch (err) {
       console.log(err);

@@ -1,9 +1,10 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
-// import { spotifyAuth, spotifyAudioAnlz } from "../services/spotify.ts";
+import SessionUser from "../services/userAuth.ts";
 import SwapiClient from "../services/swapi.ts";
 
-interface DataShape {
-  data?: Array<any>;
+interface LoginParams {
+  username?: string;
+  password?: string;
 }
 
 const router: Router = new Router();
@@ -18,9 +19,15 @@ router
   })
   .get("/api/:data", async (ctx) => {
     const dataParam: any = ctx.params.data;
-    let res: DataShape;
-    res = await SwapiClient.getData(dataParam);
+    const res = await SwapiClient.getData(dataParam);
     ctx.response.body = res;
+  })
+  .post("/api/login", async (ctx) => {
+    let paramObj: LoginParams | any = {};
+    ctx.request.url.searchParams.forEach((obj: string, val: string) => {
+      paramObj[val] = obj;
+    });
+    ctx.response.body = { "data": [paramObj] };
   });
 
 export default router;

@@ -1,8 +1,9 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
 import SessionUser from "../services/userAuth.ts";
 import SwapiClient from "../services/swapi.ts";
+import { getUrlParams } from "../services/utilities.ts";
 
-interface LoginParams {
+export interface LoginParams {
   username?: string;
   password?: string;
 }
@@ -23,11 +24,11 @@ router
     ctx.response.body = res;
   })
   .post("/api/login", async (ctx) => {
-    let paramObj: LoginParams | any = {};
-    ctx.request.url.searchParams.forEach((obj: string, val: string) => {
-      paramObj[val] = obj;
-    });
-    ctx.response.body = { "data": [paramObj] };
+    let params: object = getUrlParams(
+      ctx.request.url.searchParams.toString(),
+    );
+    console.log(params);
+    ctx.response.body = { "data": [params] };
   });
 
 export default router;

@@ -18,12 +18,17 @@ This will look at the provided json file for configuration.
 
 You'll need to provide some environment vars to this app if you'd like it to work in the form of a .env file.
 
+`UPDATE: implemented a postgres plugin to interact with a remote/local postgres database.`
+
+
 They are: 
 
-`CLIENT_ID`: spotify client/app ID
 
-`ClIENT_SECRET`: spotify client secret key
-
+`DB_USERNAME`: name of your postgres user
+`DB_PASSWORD`: postgres server password for user
+`DB_HOST`: host of databse. Will default to localhost
+`DB_PORT`: defaults to 5432
+`DB_NAME`: name of your postgres database
 `PORT`: Port you'd like this app to run on ***will default to port 8080***
 
 

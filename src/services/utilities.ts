@@ -1,5 +1,7 @@
 import { LoginParams } from "../routes/routes.ts";
 
+const username = Deno.env.get("MY_USERNAME");
+
 export const getUrlParams = (params: string): object => {
   const paramsObj: LoginParams | any = {};
   const urlParams: URLSearchParams = new URLSearchParams(params);

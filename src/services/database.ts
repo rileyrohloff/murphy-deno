@@ -10,7 +10,7 @@ export const client = new Client({
   user: Deno.env.get("DB_USERNAME"),
   password: Deno.env.get("DB_PASSWORD"),
   database: Deno.env.get("DB_NAME"),
-  hostname: Deno.env.get("DB_HOST"),
+  hostname: "localhost" || Deno.env.get("DB_HOST"),
   port: 5432,
 });
 

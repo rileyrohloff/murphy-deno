@@ -58,3 +58,22 @@ export const deleteUser = async (uid: object | any): Promise<boolean> => {
     return true;
   }
 };
+
+export const updateUser = async (
+  userId: string,
+  data: object | any,
+): Promise<any> => {
+  await client.connect();
+  const queryUser = await getUser(userId);
+  console.log(data);
+
+  if (queryUser.id) {
+    const updateQuery = await client.query(`UPDATE public.users
+    SET username='${data.username}', id='${queryUser.id}'
+    WHERE id='${userId}';`);
+    console.log(updateQuery.query);
+    return updateQuery.rowsOfObjects();
+  } else {
+    return false;
+  }
+};

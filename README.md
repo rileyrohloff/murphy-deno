@@ -25,10 +25,15 @@ They are:
 
 
 `DB_USERNAME`: name of your postgres user
+
 `DB_PASSWORD`: postgres server password for user
-`DB_HOST`: host of databse. Will default to localhost
+
+`DB_HOST`: host of databse. Will default to localhost\
+
 `DB_PORT`: defaults to 5432
+
 `DB_NAME`: name of your postgres database
+
 `PORT`: Port you'd like this app to run on ***will default to port 8080***
 
 

@@ -7,6 +7,7 @@ import {
   getUser,
   createUser,
   deleteUser,
+  updateUser,
 } from "../services/database.ts";
 
 export interface LoginParams {
@@ -81,6 +82,24 @@ router
       }
     } else {
       console.log("no body");
+    }
+  })
+  .put("/api/user/:id", async (ctx) => {
+    if (ctx.params.id && ctx.request.hasBody) {
+      const userid: any = await ctx.params;
+      const userData = await ctx.request.body();
+
+      const updateCall = await updateUser(userid.id, userData.value);
+      if (updateCall) {
+        ctx.response.body = { "data": updateCall };
+        ctx.response.status = 200;
+      } else {
+        ctx.response.body = { "data": `user ${userid} not found` };
+        ctx.response.status = 404;
+      }
+    } else {
+      ctx.response.body = { "error": "please provide a valid userid" };
+      ctx.response.status = 422;
     }
   })
   .delete("/api/user/:id", async (ctx) => {

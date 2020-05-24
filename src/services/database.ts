@@ -68,11 +68,18 @@ export const updateUser = async (
   console.log(data);
 
   if (queryUser.id) {
+    let sqlString: string = "";
+    for (const prop in data) {
+      let string = `${prop}='${data[prop]}', `;
+      sqlString += string;
+    }
+
     const updateQuery = await client.query(`UPDATE public.users
     SET username='${data.username}', id='${queryUser.id}'
     WHERE id='${userId}';`);
     console.log(updateQuery.query);
     return updateQuery.rowsOfObjects();
+    return "hello";
   } else {
     return false;
   }

@@ -2,13 +2,7 @@ import { Router } from "https://deno.land/x/oak/mod.ts";
 import SessionUser from "../services/userAuth.ts";
 import SwapiClient from "../services/swapi.ts";
 import { getUrlParams, isAuthed } from "../services/utilities.ts";
-import {
-  getAllUsers,
-  getUser,
-  createUser,
-  deleteUser,
-  updateUser,
-} from "../services/database.ts";
+import DbClient from "../services/database.ts";
 
 export interface LoginParams {
   username?: string;
@@ -28,7 +22,7 @@ router
     ctx.response.body = response;
   })
   .get("/api/users", async (ctx) => {
-    const users = await getAllUsers();
+    const users = await DbClient.getAllUsers();
 
     ctx.response.body = { "data": users };
   })
@@ -36,7 +30,7 @@ router
     if (ctx.params.id && ctx.params.id.length > 3) {
       const uid = ctx.params.id;
       console.log(uid);
-      const getUserCall = await getUser(uid);
+      const getUserCall = await DbClient.getUser(uid);
       if (getUserCall.id) {
         ctx.response.body = { "data": getUserCall };
         ctx.response.status = 200;
@@ -75,7 +69,7 @@ router
     if (ctx.request.hasBody) {
       const data = await ctx.request.body();
       if (data.value.username && data.value.password) {
-        const postUser = await createUser(data.value);
+        const postUser = await DbClient.createUser(data.value);
         ctx.response.body = { "data": postUser };
       } else {
         ctx.response.body = { "error": "not valid body" };
@@ -89,7 +83,7 @@ router
       const userid: any = await ctx.params;
       const userData = await ctx.request.body();
 
-      const updateCall = await updateUser(userid.id, userData.value);
+      const updateCall = await DbClient.updateUser(userid.id, userData.value);
       if (updateCall) {
         ctx.response.body = { "data": updateCall };
         ctx.response.status = 200;
@@ -105,7 +99,7 @@ router
   .delete("/api/user/:id", async (ctx) => {
     if (ctx.params.id && ctx.params.id.length > 3) {
       const uid = ctx.params;
-      const deleteCall = await deleteUser(uid);
+      const deleteCall = await DbClient.deleteUser(uid);
       if (deleteCall) {
         ctx.response.body = { "data": "success" };
         ctx.response.status = 200;
